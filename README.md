@@ -6,8 +6,11 @@ DogVelocity。这是一款开源的核心，增加了多数使用功能。开源
 
 ## 功能： 
 ①去除CheckStyle，以便于中国开发者编辑
+##
 ②常见log汉化
+##
 ③增添功能如Alert `(/alert <msg>)`
+##
 etc.
 
 欢迎大家使用！
