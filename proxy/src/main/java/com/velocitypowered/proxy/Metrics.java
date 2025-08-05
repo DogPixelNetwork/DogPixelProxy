@@ -71,7 +71,7 @@ public class Metrics {
 
     if (!config.didExistBefore()) {
       // Send an info message when the bStats config file gets created for the first time
-      logger.info("Velocity and some of its plugins collect metrics"
+      logger.info("[此文本为原生Velocity发出]Velocity and some of its plugins collect metrics"
           + " and send them to bStats (https://bStats.org).");
       logger.info("bStats collects some basic information for plugin"
           + " authors, like how many people use");

@@ -54,7 +54,7 @@ public class ResourceUtils {
         .getResource("default-velocity.toml");
     if (knownResource == null) {
       throw new IllegalStateException(
-          "default-velocity.toml does not exist, don't know where we are");
+          "default-velocity.toml 不存在, 我们不知道它处于哪里!");
     }
     if (knownResource.getProtocol().equals("jar")) {
       // Running from a JAR

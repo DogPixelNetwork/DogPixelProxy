@@ -78,7 +78,7 @@ public class Velocity {
         "Shutdown thread"));
 
     double bootTime = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime) / 1000d;
-    logger.info("Done ({}s)!", new DecimalFormat("#.##").format(bootTime));
+    logger.info("加载完成 (在{}s内)!", new DecimalFormat("#.##").format(bootTime));
     server.getConsoleCommandSource().start();
 
     // If we don't have a console available (because SimpleTerminalConsole returned), then we still

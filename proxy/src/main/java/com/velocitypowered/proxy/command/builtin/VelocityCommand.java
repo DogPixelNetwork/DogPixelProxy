@@ -174,10 +174,10 @@ public final class VelocityCommand {
       if (version.getName().equals("Velocity")) {
         final TextComponent embellishment = Component.text()
             .append(Component.text()
-                .content("PaperMC")
+                .content("NetScn")
                 .color(NamedTextColor.GREEN)
                 .clickEvent(
-                    ClickEvent.openUrl("https://papermc.io/software/velocity"))
+                    ClickEvent.openUrl("https://www.github.com/NetScn/Velocity"))
                 .build())
             .append(Component.text(" - "))
             .append(Component.text()
@@ -185,7 +185,7 @@ public final class VelocityCommand {
                 .color(NamedTextColor.GREEN)
                 .decoration(TextDecoration.UNDERLINED, true)
                 .clickEvent(ClickEvent.openUrl(
-                    "https://github.com/PaperMC/Velocity"))
+                    "https://github.com/NetScn/Velocity"))
                 .build())
             .build();
         source.sendMessage(embellishment);

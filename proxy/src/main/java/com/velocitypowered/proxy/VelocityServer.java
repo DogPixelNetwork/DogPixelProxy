@@ -45,6 +45,7 @@ import com.velocitypowered.proxy.command.builtin.SendCommand;
 import com.velocitypowered.proxy.command.builtin.ServerCommand;
 import com.velocitypowered.proxy.command.builtin.ShutdownCommand;
 import com.velocitypowered.proxy.command.builtin.VelocityCommand;
+import com.velocitypowered.proxy.command.builtin.AlertCommand;
 import com.velocitypowered.proxy.config.VelocityConfiguration;
 import com.velocitypowered.proxy.connection.client.ConnectedPlayer;
 import com.velocitypowered.proxy.connection.player.resourcepack.VelocityResourcePackInfo;
@@ -200,13 +201,13 @@ public class VelocityServer implements ProxyServer, ForwardingAudience {
     String implVersion;
     String implVendor;
     if (pkg != null) {
-      implName = MoreObjects.firstNonNull(pkg.getImplementationTitle(), "Velocity");
+      implName = MoreObjects.firstNonNull(pkg.getImplementationTitle(), "DogPixelProxy");
       implVersion = MoreObjects.firstNonNull(pkg.getImplementationVersion(), "<unknown>");
-      implVendor = MoreObjects.firstNonNull(pkg.getImplementationVendor(), "Velocity Contributors");
+      implVendor = MoreObjects.firstNonNull(pkg.getImplementationVendor(), "DogPixel");
     } else {
-      implName = "Velocity";
+      implName = "DogPixelProxy";
       implVersion = "<unknown>";
-      implVendor = "Velocity Contributors";
+      implVendor = "DogPixel";
     }
 
     return new ProxyVersion(implName, implVendor, implVersion);
@@ -234,7 +235,8 @@ public class VelocityServer implements ProxyServer, ForwardingAudience {
   @EnsuresNonNull({"serverKeyPair", "servers", "pluginManager", "eventManager", "scheduler",
       "console", "cm", "configuration"})
   void start() {
-    logger.info("Booting up {} {}...", getVersion().getName(), getVersion().getVersion());
+    logger.info("正在拉起 {} {}...", getVersion().getName(), getVersion().getVersion());
+    logger.info("您好，尊敬的DogPixel管理员，您正在使用DogPixel特别制作版 v1.0(特别制作版本号) 的Velocity核心！");
     console.setupStreams();
     pluginManager.registerPlugin(this.createVirtualPlugin());
 
@@ -279,13 +281,13 @@ public class VelocityServer implements ProxyServer, ForwardingAudience {
     commandManager.register(
         commandManager.metaBuilder(shutdownCommand)
             .plugin(VelocityVirtualPlugin.INSTANCE)
-            .aliases("end", "stop")
+            .aliases("end", "stop", "关机")
             .build(),
         shutdownCommand
     );
     new GlistCommand(this).register();
     new SendCommand(this).register();
-
+    new AlertCommand(this).register();
     this.doStartupConfigLoad();
 
     for (ServerInfo cliServer : options.getServers()) {
@@ -343,7 +345,7 @@ public class VelocityServer implements ProxyServer, ForwardingAudience {
     translationRegistry.defaultLocale(Locale.US);
     try {
       ResourceUtils.visitResources(VelocityServer.class, path -> {
-        logger.info("Loading localizations...");
+        logger.info("正在加载语言文件...");
 
         final Path langPath = Path.of("lang");
 
@@ -416,7 +418,7 @@ public class VelocityServer implements ProxyServer, ForwardingAudience {
   }
 
   private void loadPlugins() {
-    logger.info("Loading plugins...");
+    logger.info("正在加载插件...");
 
     try {
       Path pluginPath = Path.of("plugins");
@@ -425,7 +427,7 @@ public class VelocityServer implements ProxyServer, ForwardingAudience {
         Files.createDirectory(pluginPath);
       } else {
         if (!pluginPath.toFile().isDirectory()) {
-          logger.warn("Plugin location {} is not a directory, continuing without loading plugins",
+          logger.warn("插件地址 {} 不是一个目录，继续 而不 加载 plugins",
               pluginPath);
           return;
         }
@@ -433,7 +435,7 @@ public class VelocityServer implements ProxyServer, ForwardingAudience {
         pluginManager.loadPlugins(pluginPath);
       }
     } catch (Exception e) {
-      logger.error("Couldn't load plugins", e);
+      logger.error("无法加载插件！", e);
     }
 
     // Register the plugin main classes so that we can fire the proxy initialize event
@@ -443,13 +445,13 @@ public class VelocityServer implements ProxyServer, ForwardingAudience {
         try {
           eventManager.registerInternally(plugin, instance.get());
         } catch (Exception e) {
-          logger.error("Unable to register plugin listener for {}",
+          logger.error("无法注册插件监听器： {}",
               plugin.getDescription().getName().orElse(plugin.getDescription().getId()), e);
         }
       }
     }
 
-    logger.info("Loaded {} plugins", pluginManager.getPlugins().size());
+    logger.info("已加载 {} 个 插件！", pluginManager.getPlugins().size());
   }
 
   public Bootstrap createBootstrap(@Nullable EventLoopGroup group) {
@@ -493,7 +495,7 @@ public class VelocityServer implements ProxyServer, ForwardingAudience {
       } else if (!rs.get().getServerInfo().equals(newInfo)) {
         for (Player player : rs.get().getPlayersConnected()) {
           if (!(player instanceof ConnectedPlayer)) {
-            throw new IllegalStateException("ConnectedPlayer not found for player " + player
+            throw new IllegalStateException("已经连接的玩家 not found for player " + player
                 + " in server " + rs.get().getServerInfo().getName());
           }
           evacuate.add((ConnectedPlayer) player);
@@ -512,15 +514,15 @@ public class VelocityServer implements ProxyServer, ForwardingAudience {
           player.createConnectionRequest(next.get()).connectWithIndication()
               .whenComplete((success, ex) -> {
                 if (ex != null || success == null || !success) {
-                  player.disconnect(Component.text("Your server has been changed, but we could "
-                      + "not move you to any fallback servers."));
+                  player.disconnect(Component.text("你的服务器做出了一些改动（如关机、崩溃等），但是我们无法 "
+                      + "将您移动到任何后背服务器。后备服务器没开？"));
                 }
                 latch.countDown();
               });
         } else {
           latch.countDown();
-          player.disconnect(Component.text("Your server has been changed, but we could "
-              + "not move you to any fallback servers."));
+          player.disconnect(Component.text("你的服务器做出了一些改动（如关机、崩溃等），但是我们无法 "
+                  + "将您移动到任何后背服务器。后备服务器没开？"));
         }
       }
       try {
@@ -572,7 +574,7 @@ public class VelocityServer implements ProxyServer, ForwardingAudience {
     }
 
     Runnable shutdownProcess = () -> {
-      logger.info("Shutting down the proxy...");
+      logger.info("正在关机，感谢您的使用...");
 
       // Shutdown the connection manager, this should be
       // done first to refuse new connections
@@ -607,7 +609,7 @@ public class VelocityServer implements ProxyServer, ForwardingAudience {
         timedOut = !scheduler.shutdown() || timedOut;
 
         if (timedOut) {
-          logger.error("Your plugins took over 10 seconds to shut down.");
+          logger.error("你的 plugins 耗费了超过  10 seconds to 关机.");
         }
       } catch (InterruptedException e) {
         // Not much we can do about this...

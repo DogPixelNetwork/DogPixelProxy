@@ -139,31 +139,31 @@ public class VelocityConfiguration implements ProxyConfig {
     boolean valid = true;
 
     if (bind.isEmpty()) {
-      logger.error("'bind' option is empty.");
+      logger.error("'bind' 选项是空的");
       valid = false;
     } else {
       try {
         AddressUtil.parseAddress(bind);
       } catch (IllegalArgumentException e) {
-        logger.error("'bind' option does not specify a valid IP address.", e);
+        logger.error("'bind' 选项是一个无效的绑定地址", e);
         valid = false;
       }
     }
 
     if (!onlineMode) {
-      logger.warn("The proxy is running in offline mode! This is a security risk and you will NOT "
-          + "receive any support!");
+      logger.warn("代理正在离线模式下运行！这将会导致你的服务器是没有安全性的。 "
+          + "因此，你不会受到任何来自Mojang官方的支持。");
     }
 
     switch (playerInfoForwardingMode) {
       case NONE:
-        logger.warn("Player info forwarding is disabled! All players will appear to be connecting "
-            + "from the proxy and will have offline-mode UUIDs.");
+        logger.warn("玩家信息转发是关闭状态的。所有进入服务器的玩家将提示从代理进入 "
+            + "并且显示离线UUID。");
         break;
       case MODERN:
       case BUNGEEGUARD:
         if (forwardingSecret == null || forwardingSecret.length == 0) {
-          logger.error("You don't have a forwarding secret set. This is required for security.");
+          logger.error("未设置转发密钥(forwarding secret)，这是安全必需的。");
           valid = false;
         }
         break;
@@ -172,35 +172,35 @@ public class VelocityConfiguration implements ProxyConfig {
     }
 
     if (servers.getServers().isEmpty()) {
-      logger.warn("You don't have any servers configured.");
+      logger.warn("你没有配置任何子服务器。");
     }
 
     for (Map.Entry<String, String> entry : servers.getServers().entrySet()) {
       try {
         AddressUtil.parseAddress(entry.getValue());
       } catch (IllegalArgumentException e) {
-        logger.error("Server {} does not have a valid IP address.", entry.getKey(), e);
+        logger.error("服务器 {} 没有一个合格的IP 地址。", entry.getKey(), e);
         valid = false;
       }
     }
 
     for (String s : servers.getAttemptConnectionOrder()) {
       if (!servers.getServers().containsKey(s)) {
-        logger.error("Fallback server " + s + " is not registered in your configuration!");
+        logger.error("后备服务器 " + s + " 未在配置中注册!");
         valid = false;
       }
     }
 
     for (Map.Entry<String, List<String>> entry : forcedHosts.getForcedHosts().entrySet()) {
       if (entry.getValue().isEmpty()) {
-        logger.error("Forced host '{}' does not contain any servers", entry.getKey());
+        logger.error("强制主机（顾名思义，玩家如果运用其中的一条域名进入服务器则会传送到对应子服） '{}' 未包含任何服务器", entry.getKey());
         valid = false;
         continue;
       }
 
       for (String server : entry.getValue()) {
         if (!servers.getServers().containsKey(server)) {
-          logger.error("Server '{}' for forced host '{}' does not exist", server, entry.getKey());
+          logger.error("强制主机 '{}' 中的服务器 '{}' 不存在。", server, entry.getKey());
           valid = false;
         }
       }
@@ -209,33 +209,31 @@ public class VelocityConfiguration implements ProxyConfig {
     try {
       getMotd();
     } catch (Exception e) {
-      logger.error("Can't parse your MOTD", e);
+      logger.error("不合法的MoTD。你需要去更改它。", e);
       valid = false;
     }
 
     if (advanced.compressionLevel < -1 || advanced.compressionLevel > 9) {
-      logger.error("Invalid compression level {}", advanced.compressionLevel);
+      logger.error("无效的压缩级别 {}", advanced.compressionLevel);
       valid = false;
     } else if (advanced.compressionLevel == 0) {
-      logger.warn("ALL packets going through the proxy will be uncompressed. This will increase "
-          + "bandwidth usage.");
+      logger.warn("所有通过代理的数据包将不被压缩。这将增加带宽使用。");
     }
 
     if (advanced.compressionThreshold < -1) {
-      logger.error("Invalid compression threshold {}", advanced.compressionLevel);
+      logger.error("无效的压缩阈值 {}", advanced.compressionLevel);
       valid = false;
     } else if (advanced.compressionThreshold == 0) {
-      logger.warn("ALL packets going through the proxy will be compressed. This will compromise "
-          + "throughput and increase CPU usage!");
+      logger.warn("所有通过代理的数据包将被压缩。这将影响吞吐量并增加CPU使用率！");
     }
 
     if (advanced.loginRatelimit < 0) {
-      logger.error("Invalid login ratelimit {}ms", advanced.loginRatelimit);
+      logger.error("无效的登录频率限制 {}ms", advanced.loginRatelimit);
       valid = false;
     }
 
     if (advanced.commandRateLimit < 0) {
-      logger.error("Invalid command rate limit {}", advanced.commandRateLimit);
+      logger.error("无效的命令频率限制 {}", advanced.commandRateLimit);
       valid = false;
     }
 
@@ -250,7 +248,7 @@ public class VelocityConfiguration implements ProxyConfig {
       try {
         this.favicon = Favicon.create(faviconPath);
       } catch (Exception e) {
-        logger.info("Unable to load your server-icon.png, continuing without it.", e);
+        logger.info("无法加载您的 server-icon.png，将继续而不使用它（用默认的灰色照片）", e);
       }
     }
   }
@@ -682,12 +680,7 @@ public class VelocityConfiguration implements ProxyConfig {
   }
 
   private static class ForcedHosts {
-
-    private Map<String, List<String>> forcedHosts = ImmutableMap.of(
-        "lobby.example.com", ImmutableList.of("lobby"),
-        "factions.example.com", ImmutableList.of("factions"),
-        "minigames.example.com", ImmutableList.of("minigames")
-    );
+    private Map<String, List<String>> forcedHosts = ImmutableMap.of(); // 空 Map，无示例
 
     private ForcedHosts() {
     }
@@ -698,13 +691,13 @@ public class VelocityConfiguration implements ProxyConfig {
         for (UnmodifiableConfig.Entry entry : config.entrySet()) {
           if (entry.getValue() instanceof String) {
             forcedHosts.put(entry.getKey().toLowerCase(Locale.ROOT),
-                ImmutableList.of(entry.getValue()));
+                    ImmutableList.of(entry.getValue()));
           } else if (entry.getValue() instanceof List) {
             forcedHosts.put(entry.getKey().toLowerCase(Locale.ROOT),
-                ImmutableList.copyOf((List<String>) entry.getValue()));
+                    ImmutableList.copyOf((List<String>) entry.getValue()));
           } else {
             throw new IllegalStateException(
-                "Invalid value of type " + entry.getValue().getClass() + " in forced hosts!");
+                    "Invalid value of type " + entry.getValue().getClass() + " in forced hosts!");
           }
         }
         this.forcedHosts = ImmutableMap.copyOf(forcedHosts);
@@ -726,8 +719,8 @@ public class VelocityConfiguration implements ProxyConfig {
     @Override
     public String toString() {
       return "ForcedHosts{"
-          + "forcedHosts=" + forcedHosts
-          + '}';
+              + "forcedHosts=" + forcedHosts
+              + '}';
     }
   }
 

@@ -112,7 +112,7 @@ tasks {
 
 val projectVersion = version as String
 fill {
-    project("velocity")
+    project("dogpixelproxy")
 
     build {
         channel = BuildChannel.STABLE
@@ -122,7 +122,7 @@ fill {
         downloads {
             register("server:default") {
                 file = tasks.shadowJar.flatMap { it.archiveFile }
-                nameResolver.set { project, _, version, build -> "$project-$version-$build.jar" }
+                nameResolver.set { project, _, version, build -> "$project-$build.jar" }
             }
         }
     }
