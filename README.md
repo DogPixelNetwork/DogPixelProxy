@@ -1,36 +1,40 @@
-# Velocity
+# DogPixel Velocity
 
+## 介绍： 
+Hi,there.我是NetScn，今天给大家公开发布一款我服务器即将投入使用的核心
+DogVelocity。这是一款开源的核心，增加了多数使用功能。开源并鸣谢PaperMC团队。
+
+## 功能： 
+①去除CheckStyle，以便于中国开发者编辑
+②常见log汉化
+③增添功能如Alert `(/alert <msg>)`
+etc.
+
+欢迎大家使用！
+##
+## 以下为PaperMC原文
 [![Build Status](https://img.shields.io/github/actions/workflow/status/PaperMC/Velocity/gradle.yml)](https://papermc.io/downloads/velocity)
 [![Join our Discord](https://img.shields.io/discord/289587909051416579.svg?logo=discord&label=)](https://discord.gg/papermc)
 
-A Minecraft server proxy with unparalleled server support, scalability,
-and flexibility.
+一款拥有无与伦比的服务器支持、可扩展性和灵活性的Minecraft服务器代理。
 
-Velocity is licensed under the GPLv3 license.
+Velocity采用GPLv3许可证发布。
 
-## Goals
+## 目标
 
-* A codebase that is easy to dive into and consistently follows best practices
-  for Java projects as much as reasonably possible.
-* High performance: handle thousands of players on one proxy.
-* A new, refreshing API built from the ground up to be flexible and powerful
-  whilst avoiding design mistakes and suboptimal designs from other proxies.
-* First-class support for Paper, Sponge, Fabric and Forge. (Other implementations
-  may work, but we make every endeavor to support these server implementations
-  specifically.)
+* 构建易于理解的代码库，尽可能合理地遵循Java项目的最佳实践规范
+* 高性能：单代理可支持数千名玩家同时在线
+* 全新设计的API体系，基于灵活强大的理念从头构建，避免其他代理的设计缺陷与次优方案
+* 为Paper、Sponge、Fabric和Forge提供原生支持（其他服务端实现也可运行，但我们重点保障这些平台的兼容性）
   
-## Building
+## 构建指南
 
-Velocity is built with [Gradle](https://gradle.org). We recommend using the
-wrapper script (`./gradlew`) as our CI builds using it.
+Velocity使用 [Gradle](https://gradle.org) 构建。推荐使用封装脚本 (`./gradlew`) ，我们的CI系统也采用此方式构建。
 
-It is sufficient to run `./gradlew build` to run the full build cycle.
+执行 `./gradlew build` 命令即可完成完整构建流程。
 
-## Running
+## 运行说明
 
-Once you've built Velocity, you can copy and run the `-all` JAR from
-`proxy/build/libs`. Velocity will generate a default configuration file
-and you can configure it from there.
+构建完成后，可从 `proxy/build/libs` 目录获取 `-all` 版本JAR文件。Velocity将自动生成默认配置文件供您进行配置调整。
 
-Alternatively, you can get the proxy JAR from the [downloads](https://papermc.io/downloads/velocity)
-page.
+您也可以直接通过下载页面获取代理服务端JAR文件。 [downloads](https://papermc.io/downloads/velocity)
