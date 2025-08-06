@@ -1,4 +1,4 @@
-# DogPixel Velocity v1.0 发布版
+# DogPixel Velocity v1.2 发布版
 
 ## 介绍： 
 Hi,there.我是NetScn，今天给大家公开发布一款我服务器即将投入使用的核心
