@@ -138,7 +138,7 @@ public final class VelocityConsole extends SimpleTerminalConsole implements Cons
             NamedTextColor.RED));
       }
     } catch (Exception e) {
-      logger.error("An error occurred while running this command.", e);
+      logger.error("在执行命令时发生了错误", e);
     }
   }
 

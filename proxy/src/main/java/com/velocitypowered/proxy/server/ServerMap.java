@@ -84,7 +84,7 @@ public class ServerMap {
     RegisteredServer existing = servers.putIfAbsent(lowerName, rs);
     if (existing != null && !existing.getServerInfo().equals(serverInfo)) {
       throw new IllegalArgumentException(
-          "服务器 with name " + serverInfo.getName() + " already registered");
+          "带有该服务器名的服务器 " + serverInfo.getName() + " 已经存在");
     } else if (existing == null) {
       if (server != null) {
         server.getEventManager().fireAndForget(new ServerRegisteredEvent(rs));
@@ -107,12 +107,12 @@ public class ServerMap {
     RegisteredServer rs = servers.get(lowerName);
     if (rs == null) {
       throw new IllegalArgumentException(
-          "Server with name " + serverInfo.getName() + " is not registered!");
+          "服务器 " + serverInfo.getName() + " 未被注册!");
     }
     Preconditions.checkArgument(rs.getServerInfo().equals(serverInfo),
-        "Trying to remove server %s with differing information", serverInfo.getName());
+        "试图删除具有不同信息的服务器 %s", serverInfo.getName());
     Preconditions.checkState(servers.remove(lowerName, rs),
-        "Server with name %s replaced whilst unregistering", serverInfo.getName());
+        "注销时替换了名为 %s 的服务器", serverInfo.getName());
 
     if (server != null) {
       server.getEventManager().fireAndForget(new ServerUnregisteredEvent(rs));

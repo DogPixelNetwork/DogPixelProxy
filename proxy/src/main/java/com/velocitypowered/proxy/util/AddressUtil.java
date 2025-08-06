@@ -68,7 +68,7 @@ public final class AddressUtil {
     Preconditions.checkNotNull(ip, "ip");
     URI uri = URI.create("tcp://" + ip);
     if (uri.getHost() == null) {
-      throw new IllegalStateException("Invalid hostname/IP " + ip);
+      throw new IllegalStateException("错误的主机名/IP地址 " + ip);
     }
 
     int port = uri.getPort() == -1 ? DEFAULT_MINECRAFT_PORT : uri.getPort();

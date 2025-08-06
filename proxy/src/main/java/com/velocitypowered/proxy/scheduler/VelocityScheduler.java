@@ -143,14 +143,14 @@ public class VelocityScheduler implements Scheduler {
       try {
         if (!service.awaitTermination(10, TimeUnit.SECONDS)) {
           service.shutdownNow();
-          Log.logger.warn("Executor for plugin {} did not shut down within 10 seconds. "
-              + "Continuing with shutdown...", id);
+          Log.logger.warn("插件 ｛｝ 的执行器未在10秒内关闭。 "
+              + "继续加载伴随着关机...", id);
           allShutdown = false;
         }
 
       } catch (final InterruptedException e) {
-        Log.logger.warn("Executor for plugin {} did not shut down within 10 seconds. "
-            + "Continuing with shutdown...", id);
+        Log.logger.warn("插件 ｛｝ 的执行器未在10秒内关闭。 "
+            + "继续加载伴随着关机...", id);
       }
     }
 
@@ -294,7 +294,7 @@ public class VelocityScheduler implements Scheduler {
             String friendlyPluginName = container.getDescription().getName()
                 .orElse(container.getDescription().getId());
             Object unit = consumer == null ? runnable : consumer;
-            Log.logger.error("Exception in task {} by plugin {}", unit, friendlyPluginName,
+            Log.logger.error("插件 {} 在任务 {} 中出现异常", friendlyPluginName, unit,
                 e);
           }
         } finally {

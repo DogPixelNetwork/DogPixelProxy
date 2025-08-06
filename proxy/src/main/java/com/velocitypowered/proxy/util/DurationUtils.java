@@ -27,7 +27,7 @@ public final class DurationUtils {
   private static final long ONE_TICK_IN_MILLISECONDS = 50;
 
   private DurationUtils() {
-    throw new AssertionError("Instances of this class should not be created.");
+    throw new AssertionError("不应创建此类的实例。");
   }
 
   /**

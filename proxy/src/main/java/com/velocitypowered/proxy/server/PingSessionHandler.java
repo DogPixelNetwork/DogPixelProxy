@@ -86,7 +86,7 @@ public class PingSessionHandler implements MinecraftSessionHandler {
   @Override
   public void disconnected() {
     if (!completed) {
-      result.completeExceptionally(new IOException("Unexpectedly disconnected from remote server"));
+      result.completeExceptionally(new IOException("意外地与远程服务器断开连接"));
     }
   }
 

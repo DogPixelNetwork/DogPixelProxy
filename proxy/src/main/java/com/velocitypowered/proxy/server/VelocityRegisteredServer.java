@@ -108,7 +108,7 @@ public class VelocityRegisteredServer implements RegisteredServer, ForwardingAud
    */
   public CompletableFuture<ServerPing> ping(@Nullable EventLoop loop, PingOptions pingOptions) {
     if (server == null) {
-      throw new IllegalStateException("No Velocity proxy instance available");
+      throw new IllegalStateException("没有可用的Velocity代理实例");
     }
     CompletableFuture<ServerPing> pingFuture = new CompletableFuture<>();
     server.createBootstrap(loop).handler(new ChannelInitializer<>() {
@@ -194,7 +194,7 @@ public class VelocityRegisteredServer implements RegisteredServer, ForwardingAud
 
   @Override
   public String toString() {
-    return "registered server: " + serverInfo;
+    return "已注册服务器: " + serverInfo;
   }
 
   @Override

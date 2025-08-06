@@ -86,7 +86,7 @@ public final class ConnectionManager {
   }
 
   public void logChannelInformation() {
-    LOGGER.info("Connections will use {} channels, {} compression, {} ciphers", this.transportType,
+    LOGGER.info("连接将要使用 {} 通道, {} 压缩, {} ciphers", this.transportType,
         Natives.compress.getLoadedVariant(), Natives.cipher.getLoadedVariant());
   }
 
@@ -128,7 +128,7 @@ public final class ConnectionManager {
             if (future.isSuccess()) {
               this.endpoints.put(address, new Endpoint(channel, ListenerType.MINECRAFT));
 
-              LOGGER.info("Listening on {}", channel.localAddress());
+              LOGGER.info("服务器已开放： 在{}上", channel.localAddress());
 
               if (finalBind == 0) {
                 // Warn people with console access that HAProxy is in use, see PR: #1436
@@ -143,7 +143,7 @@ public final class ConnectionManager {
                     new ListenerBoundEvent(address, ListenerType.MINECRAFT));
               }
             } else {
-              LOGGER.error("Can't bind to {}", address, future.cause());
+              LOGGER.error("无法绑定到 {}", address, future.cause());
             }
           });
       f.syncUninterruptibly();
@@ -178,7 +178,7 @@ public final class ConnectionManager {
             server.getEventManager().fireAndForget(
                 new ListenerBoundEvent(address, ListenerType.QUERY));
           } else {
-            LOGGER.error("Can't bind to {}", bootstrap.config().localAddress(), future.cause());
+            LOGGER.error("无法绑定到 {}", bootstrap.config().localAddress(), future.cause());
           }
         });
   }

@@ -170,7 +170,7 @@ public final class VelocityCommand {
       source.sendMessage(velocity);
       source.sendMessage(copyright);
 
-      if (version.getName().equals("Velocity")) {
+      if (version.getName().equals("Net1337")) {
         final TextComponent embellishment = Component.text()
             .append(Component.text()
                 .content("NetScn")

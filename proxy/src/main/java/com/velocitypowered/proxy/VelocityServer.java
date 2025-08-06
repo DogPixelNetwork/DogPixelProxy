@@ -528,7 +528,7 @@ public class VelocityServer implements ProxyServer, ForwardingAudience {
       try {
         latch.await();
       } catch (InterruptedException e) {
-        logger.error("Interrupted whilst moving players", e);
+        logger.error("移动玩家时中断", e);
         Thread.currentThread().interrupt();
       }
     }
@@ -601,7 +601,7 @@ public class VelocityServer implements ProxyServer, ForwardingAudience {
           timedOut = true;
         } catch (ExecutionException e) {
           timedOut = true;
-          logger.error("Exception while tearing down player connections", e);
+          logger.error("断开玩家连接时出现异常", e);
         }
 
         eventManager.fire(new ProxyShutdownEvent()).join();

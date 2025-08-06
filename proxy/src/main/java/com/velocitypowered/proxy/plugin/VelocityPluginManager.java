@@ -112,7 +112,7 @@ public class VelocityPluginManager implements PluginManager {
                 maybeExistingCandidate.getSource().map(Objects::toString).orElse("<UNKNOWN>"));
           }
         } catch (Throwable e) {
-          logger.error("Unable to load plugin {}", path, e);
+          logger.error("无法加载插件 {}", path, e);
         }
       }
     }
@@ -133,7 +133,7 @@ public class VelocityPluginManager implements PluginManager {
       // Verify dependencies
       for (PluginDependency dependency : candidate.getDependencies()) {
         if (!dependency.isOptional() && !loadedCandidates.containsKey(dependency.getId())) {
-          logger.error("Can't load plugin {} due to missing dependency {}", candidate.getId(),
+          logger.error("无法加载插件 {} 因为缺少了依赖插件 {}", candidate.getId(),
               dependency.getId());
           continue pluginLoad;
         }
@@ -145,7 +145,7 @@ public class VelocityPluginManager implements PluginManager {
         pluginContainers.put(container, loader.createModule(container));
         loadedCandidates.put(realPlugin.getId(), realPlugin);
       } catch (Throwable e) {
-        logger.error("Can't create module for plugin {}", candidate.getId(), e);
+        logger.error("无法加载模块为插件 {}", candidate.getId(), e);
       }
     }
 
@@ -172,11 +172,11 @@ public class VelocityPluginManager implements PluginManager {
       try {
         loader.createPlugin(container, plugin.getValue(), commonModule);
       } catch (Throwable e) {
-        logger.error("Can't create plugin {}", description.getId(), e);
+        logger.error("无法创建插件 {}", description.getId(), e);
         continue;
       }
 
-      logger.info("Loaded plugin {} {} by {}", description.getId(), description.getVersion()
+      logger.info("已加载插件 {} {} 插件作者 {}", description.getId(), description.getVersion()
           .orElse("<UNKNOWN>"), Joiner.on(", ").join(description.getAuthors()));
       registerPlugin(container);
     }
@@ -214,7 +214,7 @@ public class VelocityPluginManager implements PluginManager {
     checkNotNull(plugin, "instance");
     checkNotNull(path, "path");
     Optional<PluginContainer> optContainer = fromInstance(plugin);
-    checkArgument(optContainer.isPresent(), "plugin is not loaded");
+    checkArgument(optContainer.isPresent(), "插件未被加载");
     Optional<?> optInstance = optContainer.get().getInstance();
     checkArgument(optInstance.isPresent(), "plugin has no instance");
 
