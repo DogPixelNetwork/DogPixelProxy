@@ -236,7 +236,6 @@ public class VelocityServer implements ProxyServer, ForwardingAudience {
       "console", "cm", "configuration"})
   void start() {
     logger.info("正在拉起 {} {}...", getVersion().getName(), getVersion().getVersion());
-    logger.info("您好，尊敬的DogPixel管理员，您正在使用DogPixel特别制作版 v1.0(特别制作版本号) 的Velocity核心！");
     console.setupStreams();
     pluginManager.registerPlugin(this.createVirtualPlugin());
 

@@ -220,7 +220,7 @@ public final class ConnectionManager {
 
     for (Endpoint endpoint : endpoints) {
       Channel serverChannel = endpoint.getChannel();
-      LOGGER.info("Closing endpoint {}", serverChannel.localAddress());
+      LOGGER.info("关闭 {}", serverChannel.localAddress());
       serverChannel.close().syncUninterruptibly();
     }
   }
@@ -242,7 +242,7 @@ public final class ConnectionManager {
       server.getEventManager().fire(new ListenerCloseEvent(address, type)).join();
 
       for (Endpoint endpoint : endpoints) {
-        LOGGER.info("Closing endpoint {}", address);
+        LOGGER.info("关闭 {}", address);
         if (interrupt) {
           try {
             endpoint.getChannel().close().sync();
