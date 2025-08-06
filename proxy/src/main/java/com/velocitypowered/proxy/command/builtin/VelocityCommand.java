@@ -71,7 +71,6 @@ import org.apache.logging.log4j.Logger;
 public final class VelocityCommand {
   private static final String USAGE = "/velocity <%s>";
 
-  @SuppressWarnings("checkstyle:MissingJavadocMethod")
   public static BrigadierCommand create(final VelocityServer server) {
     final LiteralCommandNode<CommandSource> dump = BrigadierCommand.literalArgumentBuilder("dump")
         .requires(source -> source.getPermissionValue("velocity.command.dump") == Tristate.TRUE)

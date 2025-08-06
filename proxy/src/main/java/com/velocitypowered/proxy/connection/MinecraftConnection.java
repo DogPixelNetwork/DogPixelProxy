@@ -118,7 +118,7 @@ public class MinecraftConnection extends ChannelInboundHandlerAdapter {
     }
 
     if (association != null && server.getConfiguration().isLogPlayerConnections()) {
-      logger.info("{} has connected", association);
+      logger.info("{} 连接了", association);
     }
   }
 
@@ -131,7 +131,7 @@ public class MinecraftConnection extends ChannelInboundHandlerAdapter {
     if (association != null && !knownDisconnect
         && !(activeSessionHandler instanceof StatusSessionHandler)
         && server.getConfiguration().isLogPlayerConnections()) {
-      logger.info("{} has disconnected", association);
+      logger.info("{} 断连了", association);
     }
   }
 
@@ -188,7 +188,7 @@ public class MinecraftConnection extends ChannelInboundHandlerAdapter {
 
       if (association != null) {
         if (cause instanceof ReadTimeoutException) {
-          logger.error("{}: read timed out", association);
+          logger.error("{}: 连接超时", association);
         } else {
           boolean frontlineHandler = activeSessionHandler instanceof InitialLoginSessionHandler
               || activeSessionHandler instanceof HandshakeSessionHandler

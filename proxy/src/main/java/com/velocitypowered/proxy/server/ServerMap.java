@@ -84,7 +84,7 @@ public class ServerMap {
     RegisteredServer existing = servers.putIfAbsent(lowerName, rs);
     if (existing != null && !existing.getServerInfo().equals(serverInfo)) {
       throw new IllegalArgumentException(
-          "Server with name " + serverInfo.getName() + " already registered");
+          "服务器 with name " + serverInfo.getName() + " already registered");
     } else if (existing == null) {
       if (server != null) {
         server.getEventManager().fireAndForget(new ServerRegisteredEvent(rs));

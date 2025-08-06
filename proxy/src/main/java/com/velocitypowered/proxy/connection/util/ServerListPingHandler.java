@@ -36,6 +36,11 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
+/**
+ *
+ * 这里是修改ProtocolName的地方！
+ *
+ */
 
 /**
  * Common utilities for handling server list ping results.
@@ -71,7 +76,7 @@ public class ServerListPingHandler {
     }
     return new ServerPing(
         new ServerPing.Version(version.getProtocol(),
-            "Velocity " + ProtocolVersion.SUPPORTED_VERSION_STRING),
+            "Net1337"),
         new ServerPing.Players(server.getPlayerCount(), configuration.getShowMaxPlayers(),
             samplePlayers),
         configuration.getMotd(),

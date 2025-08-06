@@ -20,9 +20,10 @@ tasks {
 
     jar {
         manifest {
-            attributes["Implementation-Title"] = "Velocity"
-            attributes["Implementation-Vendor"] = "Velocity Contributors"
+            attributes["Implementation-Title"] = "Net1337"
+            attributes["Implementation-Vendor"] = "DogPixel 合作团"
             attributes["Multi-Release"] = "true"
+            //我日，协议名原来从这里读取
         }
     }
 
